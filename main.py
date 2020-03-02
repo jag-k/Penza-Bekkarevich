@@ -22,16 +22,19 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             board.get_click(event.pos)
     image = load_image('background.png')
-    screen.blit(image, (10, 10))
+    coins = load_image('coins.png')
+    coins1 = pygame.transform.scale(coins, (50, 50))
+    screen.blit(image, (0, 0))
+    screen.blit(coins1, (550, 550))
     font_num_of_money = pygame.font.Font(None, 25)
-    text_num_of_money = font_num_of_money.render('Число монет: {}'.format(board.GetPlayer().money), 1,
+    text_num_of_money = font_num_of_money.render(': {}'.format(board.GetPlayer().money), 1,
                                                  (255, 255, 255))
-    screen.blit(text_num_of_money, (10, 550))
+    screen.blit(text_num_of_money, (605, 570))
     if board.GetPlayer().weapon:
-        font_durability = pygame.font.Font(None, 25)
+        font_durability = pygame.font.Font(None, 45)
         text_durability = font_durability.render('Оставшаяся сила оружия: {}'.format(board.GetPlayer().durability),
                                                  1, (255, 255, 255))
-        screen.blit(text_durability, (10, 600))
+        screen.blit(text_durability, (50, 565))
     for i in range(5):
         for j in range(5):
             board.grid[i][j].Render()
@@ -40,7 +43,7 @@ while running:
         font_checkNearby = pygame.font.Font(None, 25)
         text_checkNearby = font_checkNearby.render("Ты можешь ходить только по соседним клеткам!", 1,
                                                    (255, 255, 255))
-        screen.blit(text_checkNearby, (150, 600))
+        screen.blit(text_checkNearby, (150, 610))
     board.render(screen)
     pygame.display.flip()
 pygame.quit()

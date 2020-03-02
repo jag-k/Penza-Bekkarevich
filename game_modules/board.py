@@ -1,6 +1,6 @@
 import random
 import pygame
-from game_modules import moneyTile, tileliving, weapontile, player, potion, chest, moving, potion
+from game_modules import moneyTile, tileliving, weapontile, player, chest, moving, potion
 from os import path
 
 
@@ -28,7 +28,7 @@ def create_tile(board, X, Y):
         indicator = None
         return chest.Chest('chest', indicator, board, X, Y, board.screen)  # chest
     elif type_of_tile == 7:
-        indicator = 1
+        indicator = None
         return potion.Potion('poison', indicator, board, X, Y, board.screen, 1)  # poison
     elif type_of_tile == 8:
         indicator = durability = random.randint(2, 5)
@@ -40,13 +40,13 @@ def create_tile(board, X, Y):
         indicator = None
         return potion.Potion('regen', indicator, board, X, Y, board.screen, None)
     elif type_of_tile == 13:
-        indicator = hp = 5
+        indicator = hp = 35
         return tileliving.TileLiving('boss', indicator, board, X, Y, hp)
 
 
 class Board:
     def GenerateGame(self):
-        # pygame.mixer.music.play(loops=1)
+        pygame.mixer.music.play(loops=-1)
         self.grid = [[0 for i in range(self.lenX)] for j in range(self.lenY)]
         for i in range(5):
             for j in range(5):
@@ -71,8 +71,8 @@ class Board:
         self.isBoss = False
         self.move = True
         dirname = path.join(path.dirname(__file__), 'data\\music')
-        pygame.mixer.music.load(path.join(dirname, 'gimn_SSSR.ogg'))
-        pygame.mixer.music.set_volume(40)
+        pygame.mixer.music.load(path.join(dirname, 'game_music.ogg'))
+        pygame.mixer.music.set_volume(20)
         self.amount_of_regen = 3
         self.GenerateGame()
 
@@ -89,15 +89,13 @@ class Board:
                                                                      i * self.cell_size + self.top, self.cell_size,
                                                                      self.cell_size), 1)
         else:
-            screen2 = pygame.display.set_mode(screen.get_size())
-            # pygame.mixer.music.play(loops=1)
-            screen2.fill((255, 0, 0))
+            screen.fill((255, 0, 0))
             font_pl_is_dead = pygame.font.Font(None, 45)
             text_pl_is_dead = font_pl_is_dead.render('Ты мёртв', 1, (0, 0, 0))
             num_of_money_text = font_pl_is_dead.render('Собранные монеты:{}'.format(self.GetPlayer().money), 1,
                                                        (0, 0, 0))
-            screen2.blit(text_pl_is_dead, (270, 200))
-            screen2.blit(num_of_money_text, (270, 250))
+            screen.blit(text_pl_is_dead, (270, 200))
+            screen.blit(num_of_money_text, (270, 250))
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)

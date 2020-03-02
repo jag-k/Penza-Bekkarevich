@@ -42,7 +42,7 @@ class Player(tileliving.TileLiving):
         pass
 
     def check_boss(self):
-        if self.money > 5:
+        if self.money > 50:
             return True
         else:
             return False
