@@ -68,6 +68,8 @@ class Board:
         self.lenX = lenX
         self.lenY = lenY
         self.nearby = True
+        self.poisoness = False
+        self.regeneration = False
         self.isBoss = False
         self.move = True
         dirname = path.join(path.dirname(__file__), 'data\\music')
@@ -119,13 +121,17 @@ class Board:
             currentCell = self.grid[cell[0]][cell[1]]
             currentCell.OnActivate()
             if self.GetPlayer().poison_effect():
+                self.poisoness = True
                 if self.GetPlayer().HP > 1:
                     self.GetPlayer().HP -= 1
                     self.GetPlayer().indicator -= 1
                 elif self.GetPlayer().HP == 1:
-                    poisoness = False
-                    self.GetPlayer().poison(poisoness)
+                    self.poisoness = False
+                    self.GetPlayer().poison(self.poisoness)
+            else:
+                self.poisoness = False
             if self.GetPlayer().regen_effect():
+                self.regeneration = True
                 if self.amount_of_regen > 0:
                     self.GetPlayer().HP += 1
                     self.GetPlayer().indicator += 1
@@ -133,8 +139,11 @@ class Board:
                         self.GetPlayer().HP = self.GetPlayer().indicator = 10
                     self.amount_of_regen -= 1
                 else:
-                    regeneration = False
-                    self.GetPlayer().regen(regeneration)
+                    self.regeneration = False
+                    self.GetPlayer().regen(self.regeneration)
+            else:
+                self.regeneration = False
+                self.amount_of_regen = 3
             mv = moving.Moving(self.hero_cords, cell, self.hero_cell, self.screen, self.grid, self)
             if self.move:
                 mv.hero_move()

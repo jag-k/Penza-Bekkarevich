@@ -39,6 +39,14 @@ while running:
         for j in range(5):
             board.grid[i][j].Render()
     board.sp_boss()
+    if board.poisoness:
+        font_checkNearby = pygame.font.Font(None, 25)
+        text_checkNearby = font_checkNearby.render("Вы отравлены!", 1, (255, 255, 255))
+        screen.blit(text_checkNearby, (150, 630))
+    if board.regeneration:
+        font_checkNearby = pygame.font.Font(None, 25)
+        text_checkNearby = font_checkNearby.render("Вы регенерируете", 1, (255, 255, 255))
+        screen.blit(text_checkNearby, (150, 630))
     if not board.nearby:
         font_checkNearby = pygame.font.Font(None, 25)
         text_checkNearby = font_checkNearby.render("Ты можешь ходить только по соседним клеткам!", 1,
