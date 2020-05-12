@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav><a class="btn btn-secondary" href="/">На главную</a></nav>
+<h1 align="center">Содержимое Вашей корзины</h1>
+<table border="1">
+      <tr>
+        <th align="center">Изображение</th>
+        <th align="center">Полное название</th>
+        <th align="center">Цена</th>
+		<th>Количество</th>
+		<th>Стоимость</th>
+      </tr>
+{% for item in cart %}
+      <tr><td align="center"><img src={{item.guitar.picture}} alt="здесь должно было быть изображение, но не нашлось"></td><td align="center">{{item.guitar.name}}</td><td align="center">{{item.guitar.price}}</td><td align="center">{{item.quantity}}</td><td align="center">{{item.cost}}</td><td><nav><div><a href="/delete/{{ item.id }}" class="btn btn-danger">Удалить</a></div></nav></td></tr>
+{% endfor %}
+</table>
+<h3>Итого: {{ total }} р.</h3>
+<nav><div><a href="/checkout" class="btn btn-primary">Оформить заказ</a></div></nav>
+{% endblock %}

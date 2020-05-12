@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav>
+  <a class="btn btn-secondary" href="/">На главную</a>
+  {% if current_user.is_authenticated %}
+  <div align="right">
+  <a href="/cart"><img src="static/img/cart.jpg" alt="тут корзинка"></a>
+  <a class="btn btn-secondary" href="/cart">Моя корзина (элементов - {{ num }})<a>
+  </div>
+  {% endif %}
+</nav>
+<h1 align="center">Все электрогитары</h1>
+<table border="1" style="width: 100%">
+    <colgroup>
+       <col span="1" style="width: 25%;">
+       <col span="1" style="width: 25%;">
+       <col span="1" style="width: 25%;">
+    </colgroup>
+      <tr>
+        <th align="center">Изображение</th>
+        <th align="center">Полное название</th>
+        <th align="center">Цена</th>
+		<th></th>
+      </tr>
+{% for item in guitars %}
+      <tr><td align="center"><img src={{item.picture}} alt="здесь должно было быть изображение, но не нашлось"></td><td>{{item.name}}</td><td align="center">{{item.price}}</td><td align="center"><nav><div><a href="/adding/{{ item.id }}" class="btn btn-danger">В корзину</a></div></nav></td></tr>
+{% endfor %}
+</table>
+{% endblock %}
